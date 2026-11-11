@@ -35,6 +35,8 @@
 | screen_name | string | 현재 화면 (`home`,`search`,`category`,`product`,`cart`,`checkout`, `order_complete`) |
 | previous_screen_name | string | 직전 화면 |
 
+- 화면 정보는 별도 이벤트(screen_view) 없이 모든 이벤트의 공통 파라미터(screen_name, previous_screen_name)로 기록
+
 
 ### items 배열 구조 
 
@@ -56,7 +58,6 @@
 | session_start | 앱 실행 또는 웹 접속시 세션 시작 | - |
 | sign_up | 온라인 회원가입 완료 | method (`kakao`,`naver`,`email`) |
 | login | 로그인 완료 | method |
-| screen_view | 화면 진입 | screen_name, previous_screen_name |
 
 ### 3-2. 탐색
 | 이벤트 | 발생 시점 | 주요 event_params / items |
