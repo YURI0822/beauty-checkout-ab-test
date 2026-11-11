@@ -107,9 +107,10 @@
 | 컬럼 | 타입 | 설명 |
 |---|---|---|
 | month | DATE | 월 (매월 1일) |
+| new_visitors | INTEGER | 신규 고객 중 해당 월 앱·웹 방문자 수 (첫 구매 전환율의 분모) |
 | new_signups | INTEGER | 신규 가입 수 |
 | new_buyers | INTEGER | 신규 고객 중 첫 구매 고객 수 |
-| new_first_purchase_rate | FLOAT | 신규 첫 구매 전환율 |
+| new_first_purchase_rate | FLOAT | 신규 첫 구매 전환율 (new_buyers ÷ new_visitors) |
 | new_avg_first_order_amount | INTEGER | 신규 첫 주문 평균 금액 |
 | existing_buyers | INTEGER | 기존 고객 중 온라인 구매 고객 수 |
 | existing_purchase_rate | FLOAT | 기존 고객 온라인 구매 전환율 |
