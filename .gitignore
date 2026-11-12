@@ -12,3 +12,6 @@ __pycache__/
 .env
 *service-account*.json
 *credentials*.json
+
+# 용량이 큰 이벤트 원본 (GitHub 100MB 제한) - 생성 노트북을 시드로 다시 실행하면 재현됨
+data/events*

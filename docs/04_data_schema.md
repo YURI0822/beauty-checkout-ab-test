@@ -34,6 +34,35 @@
 
 ## 4. 테이블 상세 
 
+### events
+
+- GA4 BigQuery 내보내기 형식 (1행 = 1이벤트). 이벤트 종류와 이벤트별 속성(key)은 03 이벤트 로깅 설계서 참고
+
+| 컬럼 | 타입 | 설명 |
+|---|---|---|
+| event_date | STRING | 이벤트 발생일 (YYYYMMDD, KST 기준) |
+| event_timestamp | INTEGER | 발생 시각 (마이크로초, UTC 기준) |
+| event_name | STRING | 이벤트 이름 |
+| event_params | ARRAY<STRUCT> | 이벤트 속성 배열 (key, value) |
+| user_id | STRING | 회원 ID (로그인 상태에서만 존재) |
+| user_pseudo_id | STRING | 기기 식별자 |
+| platform | STRING | `APP` / `WEB` |
+| device | STRUCT | category, operating_system |
+| traffic_source | STRUCT | name(캠페인), medium, source (최초 유입 경로) |
+| user_properties | ARRAY<STRUCT> | 회원 속성 배열 (key, value) |
+| items | ARRAY<STRUCT> | 상품 배열 (item_id, item_name, item_category, item_variant, price, quantity) |
+| ecommerce | STRUCT | 주문 금액 정보 (transaction_id, purchase_revenue, shipping_value, total_item_quantity), purchase 이벤트에만 존재 |
+
+**중첩 구조 읽는 법**
+
+| 구조 | 형태 | 값 꺼내는 방법 |
+|---|---|---|
+| event_params, user_properties | `[{key, value: {string_value, int_value, double_value}}, …]` | `(SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id')` |
+| items | `[{item_id, price, …}, …]` | `FROM raw.events, UNNEST(items) AS item` → 상품 1개 = 1행 |
+| device, traffic_source, ecommerce | 단일 STRUCT | `device.operating_system`처럼 점(.)으로 접근 |
+
+- value는 타입별 칸 중 하나만 채워짐 (문자는 string_value, 정수는 int_value, 실수는 double_value)
+
 ### users 
 
 | 컬럼 | 타입 | 설명 |
